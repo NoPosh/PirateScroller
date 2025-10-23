@@ -33,6 +33,7 @@ namespace TestGame.Gameplay.Character
             _character = new Character(health, mover);
 
             _inputHandler.OnMove += v => _character.PhysicalMover.SetDirection(v);
+            _inputHandler.OnJump += _character.PhysicalMover.JumpRequest;
         }
 
         private void FixedUpdate()

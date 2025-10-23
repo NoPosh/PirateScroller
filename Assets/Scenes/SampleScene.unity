@@ -505,7 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveForce: 10
   maxSpeed: 10
-  jumpForce: 3
+  jumpForce: 10
   maxHealth: 10
 --- !u!50 &1449758893
 Rigidbody2D:

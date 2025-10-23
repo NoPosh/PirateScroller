@@ -55,5 +55,11 @@ namespace TestGame.Core.Movement
             _currentDirection = direction;
 
         }
+
+        public void JumpRequest()
+        {
+            _needJump = true; 
+        }
+    
     }
 }
