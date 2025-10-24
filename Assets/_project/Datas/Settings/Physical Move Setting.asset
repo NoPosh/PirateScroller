@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Physical Move Setting
   m_EditorClassIdentifier: 
   MoveForce: 150
-  MaxMoveSpeed: 25
+  MaxMoveSpeed: 50
   JumpForce: 100
   StopLerp: 0.15

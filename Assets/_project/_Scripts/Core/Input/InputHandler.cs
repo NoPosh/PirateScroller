@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 
 namespace TestGame.Core.Input
@@ -11,12 +12,16 @@ namespace TestGame.Core.Input
     {
         public event Action<Vector2> OnMove;
         public event Action OnJump;
-        public event Action OnThrowBomb;
+        public event Action<Vector3> OnThrowBomb;
+        public event Action OnPutBomb;
 
         private InputS _controls;
 
         private Vector2 _moveInput;
         private bool _needJump;
+
+        private bool _needThrowBomb;
+        private bool _needPutBomb;
 
         public InputHandler()
         {
@@ -27,9 +32,10 @@ namespace TestGame.Core.Input
         public void Update()
         {
             _moveInput = _controls.Player.Move.ReadValue<Vector2>();
-            //_needJump = _controls.Player.Jump.triggered;
             _needJump = _controls.Player.Jump.IsPressed();
 
+            _needThrowBomb = _controls.Player.LMB.triggered;
+            _needPutBomb = _controls.Player.RMB.triggered;
 
             if (_moveInput != Vector2.zero)
             {
@@ -43,6 +49,20 @@ namespace TestGame.Core.Input
             if (_needJump)
             {
                 OnJump?.Invoke();
+            }
+
+            if (_needThrowBomb)
+            {
+                Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+                mouseWorldPos.z = 0f;
+
+                OnThrowBomb?.Invoke(mouseWorldPos);
+            }
+
+            if (_needPutBomb)
+            {
+                OnPutBomb?.Invoke();
             }
         }
 

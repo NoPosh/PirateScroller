@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TestGame.Core.Weapon
 {
-    public class SimpleBomb : MonoBehaviour
+    public class SimpleBomb : BaseBomb
     {
         //Обычная бомба: при спавне начинает обратный отсчет -> взрывается 
         [SerializeField] private float explosionInterval = 3f;
@@ -18,12 +18,11 @@ namespace TestGame.Core.Weapon
         private float explosionTimer = 0f;
         private bool _isActivated = false;
 
-        private void Start()
+        private Rigidbody2D _rb;
+
+        public override void Init()
         {
-            Init();
-        }
-        public void Init()
-        {
+            _rb = GetComponent<Rigidbody2D>();
             StartExplosionTimer();
         }
 
@@ -65,7 +64,6 @@ namespace TestGame.Core.Weapon
                 }
 
                 if (hit.TryGetComponent(out IForcable forcable))
-                //if (hit.attachedRigidbody != null)
                 {
                     //То отбрасываем от центра взрыва в сторону
                     Vector2 direction = (hit.transform.position - transform.position).normalized;   //Нам надо направление умножить на силу, причем сила зависит от
@@ -75,11 +73,19 @@ namespace TestGame.Core.Weapon
                     float finalForce = maxExplosionForce * (1f - force);
 
                     forcable.AddForce(direction * finalForce, ForceMode2D.Impulse);
-                    //hit.attachedRigidbody.AddForce(direction * finalForce, ForceMode2D.Impulse);
-                    Debug.Log("Отбросили: " + hit.gameObject.name);
                 }
 
             }
+        }
+
+        public override void AddForce(Vector2 force, ForceMode2D mode)
+        {
+            _rb.AddForce(force, mode);
+        }
+
+        public override GameObject GetPrefab()
+        {
+            return gameObject;
         }
     }
 }

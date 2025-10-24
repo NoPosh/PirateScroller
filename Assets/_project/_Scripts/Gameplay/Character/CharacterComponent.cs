@@ -5,6 +5,7 @@ using TestGame.Core.Health;
 using TestGame.Core.Input;
 using TestGame.Core.Interfaces;
 using TestGame.Core.Movement;
+using TestGame.Core.Weapon;
 using TestGame.Data.Settings;
 using UnityEngine;
 
@@ -13,11 +14,10 @@ namespace TestGame.Gameplay.Character
     [RequireComponent(typeof(Rigidbody2D))]
     public class CharacterComponent : MonoBehaviour, IDamageable, IForcable
     {
-        [Header("Настройки движения")]
-        [SerializeField] private PhysicalMoveSettings _physicalMoveSettings;
+        [SerializeField] private CharacterSettings _characterSettings;
 
-        [Header("Настройки здоровья")]
-        [SerializeField] private int maxHealth;
+        [Header("Прочее")]
+        [SerializeField] private Transform _spawnPoint;
 
         private Character _character;
         private Rigidbody2D _rb;
@@ -30,15 +30,21 @@ namespace TestGame.Gameplay.Character
         {
             _rb = GetComponent<Rigidbody2D>();
 
-            var mover = new PhysicalMover(_rb, _physicalMoveSettings);
-            var health = new HealthSystem(maxHealth);
+            var mover = new PhysicalMover(_rb, _characterSettings._physicalMoveSettings);
+            var health = new HealthSystem(_characterSettings.maxHealth);
 
             _inputHandler = new InputHandler();
 
-            _character = new Character(health, mover);
+            CombatSystem _combatSystem = new CombatSystem(_spawnPoint, _characterSettings._throwForce);
+            _combatSystem.SetWeapon(_characterSettings.startBomb);
+            _combatSystem.AddBomb(10);
+
+            _character = new Character(health, mover, _combatSystem);
 
             _inputHandler.OnMove += v => _character.PhysicalMover.SetDirection(v);
             _inputHandler.OnJump += _character.PhysicalMover.JumpRequest;
+            _inputHandler.OnThrowBomb += v => _character.CombatSystem.ThrowBomb(v);
+            _inputHandler.OnPutBomb += _character.CombatSystem.PutBomb;
         }
 
         private void FixedUpdate()
@@ -61,5 +67,6 @@ namespace TestGame.Gameplay.Character
         {
             _character.AddForce(force, mode);
         }
+
     }
 }

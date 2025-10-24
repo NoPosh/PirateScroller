@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TestGame.Core.DTO;
 using TestGame.Core.Health;
 using TestGame.Core.Movement;
+using TestGame.Core.Weapon;
 using UnityEngine;
 
 namespace TestGame.Gameplay.Character
@@ -12,10 +13,13 @@ namespace TestGame.Gameplay.Character
         public HealthSystem Health { get; }
         public PhysicalMover PhysicalMover { get; }
 
-        public Character(HealthSystem health, PhysicalMover mover)
+        public CombatSystem CombatSystem { get; }
+
+        public Character(HealthSystem health, PhysicalMover mover, CombatSystem combat)
         {
             Health = health;
             PhysicalMover = mover;
+            CombatSystem = combat;
         }
 
         public void FixedUpdate(float fixedDeltaTime)
