@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TestGame.Core.DTO;
 using UnityEngine;
 
 namespace TestGame.Core.Health
@@ -16,9 +17,9 @@ namespace TestGame.Core.Health
             _currentHealth = maxHealth;
         }
 
-        public void TakeDamage(int amount)
+        public void TakeDamage(DamageInfo info)
         {
-            _currentHealth -= amount;
+            _currentHealth -= info.Value;
 
             if (_currentHealth <= 0)
             {
