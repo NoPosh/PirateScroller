@@ -21,10 +21,14 @@ namespace TestGame.Gameplay.Character
         private Character _character;
         private Rigidbody2D _rb;
         private InputHandler _inputHandler;
+        [SerializeField] private GroundCheck _groundCheck;
+
+        private bool IsGrounded => _groundCheck.IsGrounded;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
+
             var mover = new PhysicalMover(_rb, moveForce, maxSpeed, jumpForce);
             var health = new HealthSystem(maxHealth);
 
@@ -38,6 +42,7 @@ namespace TestGame.Gameplay.Character
 
         private void FixedUpdate()
         {
+            _character.PhysicalMover.SetGrounded(IsGrounded);
             _character.FixedUpdate(Time.fixedDeltaTime);
         }
 

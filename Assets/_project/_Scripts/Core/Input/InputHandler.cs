@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.iOS;
 
 
 namespace TestGame.Core.Input
@@ -28,7 +27,8 @@ namespace TestGame.Core.Input
         public void Update()
         {
             _moveInput = _controls.Player.Move.ReadValue<Vector2>();
-            _needJump = _controls.Player.Jump.triggered;
+            //_needJump = _controls.Player.Jump.triggered;
+            _needJump = _controls.Player.Jump.IsPressed();
 
 
             if (_moveInput != Vector2.zero)

@@ -15,6 +15,7 @@ namespace TestGame.Core.Movement
         private float _stopLerp = 0.15f;
 
         private Vector2 _currentDirection;
+        private bool _isGrounded;
         private bool _needJump = false;
         
         public PhysicalMover(Rigidbody2D rb, float moveForce, float maxSpeed, float jumpForce)
@@ -25,6 +26,7 @@ namespace TestGame.Core.Movement
             _jumpForce = jumpForce;
         }
 
+        //TODO: разделить maxSpeed по X и Y
         public void FixedUpdate(float fixedDeltaTime)
         {
             if (_currentDirection.sqrMagnitude > 0.01f)
@@ -43,11 +45,12 @@ namespace TestGame.Core.Movement
                 _rb.velocity = _rb.velocity.normalized * _maxSpeed;
             }
 
-            if (_needJump)
+            if (_needJump && _isGrounded)
             {
-                _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
-                _needJump = false;
+                _rb.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);                
             }
+
+            _needJump = false;
         }
 
         public void SetDirection(Vector2 direction)
@@ -58,8 +61,10 @@ namespace TestGame.Core.Movement
 
         public void JumpRequest()
         {
+
             _needJump = true; 
         }
-    
+
+        public void SetGrounded(bool grounded) => _isGrounded = grounded;
     }
 }
