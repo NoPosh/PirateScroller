@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TestGame.Core.DTO;
 using UnityEngine;
+using System;
 
 namespace TestGame.Core.Health
 {
@@ -9,6 +10,9 @@ namespace TestGame.Core.Health
     {
         private int _maxHealth;
         private int _currentHealth;
+
+        public event Action OnDamaged;
+        public event Action OnDead;
 
         public HealthSystem(int maxHealth)
         {
@@ -20,6 +24,8 @@ namespace TestGame.Core.Health
         public void TakeDamage(DamageInfo info)
         {
             _currentHealth -= info.Value;
+
+            OnDamaged?.Invoke();
 
             if (_currentHealth <= 0)
             {
@@ -36,7 +42,7 @@ namespace TestGame.Core.Health
 
         private void Die()
         {
-
+            OnDamaged?.Invoke();
         }
 
     }

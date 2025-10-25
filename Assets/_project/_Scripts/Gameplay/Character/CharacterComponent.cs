@@ -18,6 +18,8 @@ namespace TestGame.Gameplay.Character
 
         [Header("Прочее")]
         [SerializeField] private Transform _spawnPoint;
+        [SerializeField] private Animator _animator;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
         private Character _character;
         private Rigidbody2D _rb;
@@ -45,12 +47,26 @@ namespace TestGame.Gameplay.Character
             _inputHandler.OnJump += _character.PhysicalMover.JumpRequest;
             _inputHandler.OnThrowBomb += v => _character.CombatSystem.ThrowBomb(v);
             _inputHandler.OnPutBomb += _character.CombatSystem.PutBomb;
+
+            _character.Health.OnDamaged += () => _animator.SetTrigger("Hit");  
+            _character.Health.OnDead += () => _animator.SetTrigger("DeadHit");
+
+            _character.PhysicalMover.OnJump += () => _animator.SetTrigger("Jump");
         }
 
         private void FixedUpdate()
         {
             _character.PhysicalMover.SetGrounded(IsGrounded);
             _character.FixedUpdate(Time.fixedDeltaTime);
+
+            if (_rb.velocity.x > 0.05f)
+                _spriteRenderer.flipX = false;
+            else if (_rb.velocity.x < -0.05f)
+                _spriteRenderer.flipX = true;
+
+            _animator.SetFloat("SpeedX", Mathf.Abs(_rb.velocity.x));
+            _animator.SetFloat("SpeedY", _rb.velocity.y);
+            _animator.SetBool("IsGrounded", IsGrounded);
         }
 
         private void Update()

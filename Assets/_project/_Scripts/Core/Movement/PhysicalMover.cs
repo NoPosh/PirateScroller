@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TestGame.Data.Settings;
@@ -16,6 +17,8 @@ namespace TestGame.Core.Movement
         private bool _needJump = false;
 
         private Vector2 _playerVelocity;
+
+        public event Action OnJump;
 
         public PhysicalMover(Rigidbody2D rb, PhysicalMoveSettings settings)
         {
@@ -45,7 +48,8 @@ namespace TestGame.Core.Movement
             
             if (_needJump && _isGrounded)
             {
-                _rb.AddForce(Vector2.up * _settings.JumpForce, ForceMode2D.Impulse);                
+                _rb.AddForce(Vector2.up * _settings.JumpForce, ForceMode2D.Impulse);  
+                OnJump?.Invoke();
             }
 
             _needJump = false;
@@ -54,7 +58,6 @@ namespace TestGame.Core.Movement
         public void SetDirection(Vector2 direction)
         {
             _currentDirection = direction;
-
         }
 
         public void JumpRequest()

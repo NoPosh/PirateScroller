@@ -22316,6 +22316,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterSettings: {fileID: 11400000, guid: 953af7dcf0bdc274699ca4c73fe59082, type: 2}
   _spawnPoint: {fileID: 1449758895}
+  _animator: {fileID: 728558290}
+  _spriteRenderer: {fileID: 728558289}
   _groundCheck: {fileID: 1887993568}
 --- !u!50 &1449758893
 Rigidbody2D:
