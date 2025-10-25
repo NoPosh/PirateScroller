@@ -43,6 +43,10 @@ namespace TestGame.Core.Enemy
 
             if (CurrentState != null) CurrentState.Update(deltaTime);
 
+            if (StateInfo.HasCharacter) Debug.Log($"Рядом персонаж: {StateInfo.CharacterPosition}");
+
+            if (StateInfo.HasBomb) Debug.Log($"Рядом бомба");
+
         }
 
         private void CheckTransitions()
@@ -77,5 +81,34 @@ namespace TestGame.Core.Enemy
         public bool NeedJump;
         public Vector2 CurrentVelocity;
 
+
+        public Vector2 CharacterPosition;
+        public Vector2 BombPosition;
+
+        public bool HasCharacter;
+        public bool HasBomb;
+
+        public void SetCharacterPosition(Vector2 tr)
+        {
+            HasCharacter = true;
+            CharacterPosition = tr;
+        }
+        public void ResetCharacterPos()
+        {
+            HasCharacter = false;
+            CharacterPosition = Vector2.zero;
+        }
+
+        public void SetBombPosition(Vector2 pos)
+        {
+            HasBomb = true;
+            BombPosition = pos;
+        }
+
+        public void ResetBombPosition()
+        {
+            HasBomb = false;
+            BombPosition = Vector2.zero;
+        }
     }
 }

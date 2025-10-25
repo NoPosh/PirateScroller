@@ -50,7 +50,7 @@ namespace TestGame.Core.Enemy
 
         private void RequestJump()
         {
-            PhysicalMover.JumpRequest();
+            PhysicalMover.JumpRequest(); 
         }
     }
 }

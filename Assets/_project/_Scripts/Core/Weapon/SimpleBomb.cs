@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TestGame.Core.DTO;
@@ -9,6 +10,7 @@ namespace TestGame.Core.Weapon
     public class SimpleBomb : BaseBomb
     {
         //Обычная бомба: при спавне начинает обратный отсчет -> взрывается 
+        public override event Action<BaseBomb> OnDestroyed;
         [SerializeField] private float explosionInterval = 3f;
 
         [SerializeField] private float explosionRadius = 3f;
@@ -92,6 +94,11 @@ namespace TestGame.Core.Weapon
         public override GameObject GetPrefab()
         {
             return gameObject;
+        }
+
+        private void OnDestroy()
+        {
+            OnDestroyed?.Invoke(this);
         }
     }
 }

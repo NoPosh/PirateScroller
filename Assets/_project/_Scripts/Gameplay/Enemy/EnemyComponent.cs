@@ -38,6 +38,12 @@ namespace TestGame.Gameplay.Enemy
             var stm = new EnemyStateMachine();
 
             _enemy = new Core.Enemy.Enemy(health, mover, stm);
+
+            //_enemyDetector.OnCharacterEnter += v => _enemy.StateMachine.StateInfo.SetCharacterPosition(v);
+            //_enemyDetector.OnCharacterExit += _enemy.StateMachine.StateInfo.ResetCharacterPos;
+            //
+            //_enemyDetector.OnBombEnter += bomb => _enemy.StateMachine.StateInfo.SetBombPosition(bomb.transform.position);
+            //_enemyDetector.OnBombExit += _enemy.StateMachine.StateInfo.ResetBombPosition;
         }
 
         private void FixedUpdate()
@@ -45,7 +51,18 @@ namespace TestGame.Gameplay.Enemy
             _enemy.PhysicalMover.SetGrounded(IsGrounded);
             _enemy.StateMachine.StateInfo.NeedJump = CanJump;
 
-            _enemy.FixedUpdate(Time.deltaTime);
+            if (_enemyDetector.HasBombs)
+                _enemy.StateMachine.StateInfo.SetBombPosition(_enemyDetector.GetNearestBomb().transform.position);
+            else
+                _enemy.StateMachine.StateInfo.ResetBombPosition();
+
+            if (_enemyDetector.HasCharacter)
+                _enemy.StateMachine.StateInfo.SetCharacterPosition(_enemyDetector.CharacterPosition);
+            else
+                _enemy.StateMachine.StateInfo.ResetCharacterPos();
+
+            _enemy.FixedUpdate(Time.fixedDeltaTime);
+
         }
 
         public void TakeDamage(DamageInfo info)
@@ -57,5 +74,6 @@ namespace TestGame.Gameplay.Enemy
         {
             _enemy.AddForce(force, mode);
         }
+
     }
 }
