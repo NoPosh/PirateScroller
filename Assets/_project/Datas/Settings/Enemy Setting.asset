@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ded146207477100469fa4330fa21837e, type: 3}
-  m_Name: Character Setting
+  m_Name: Enemy Setting
   m_EditorClassIdentifier: 
-  _physicalMoveSettings: {fileID: 11400000, guid: 41927cba323dc0f46b98da55cfce2fe4, type: 2}
+  _physicalMoveSettings: {fileID: 11400000, guid: 09918a4cdb5bf244d83db95689e59b9f, type: 2}
   maxHealth: 3
   startBomb: {fileID: 5239313212924737011, guid: 75e7471dc6ce23c45854dd4a10dcc8ec, type: 3}
   _throwForce: 5

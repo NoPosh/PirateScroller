@@ -23,15 +23,18 @@ namespace TestGame.Core.Health
 
         public void TakeDamage(DamageInfo info)
         {
+            if (_currentHealth == 0) return;
             _currentHealth -= info.Value;
-
-            OnDamaged?.Invoke();
+            Debug.Log($"Получен урон, осталось {_currentHealth} / {_maxHealth}");
+            
 
             if (_currentHealth <= 0)
             {
                 _currentHealth = 0;
                 Die();
             }
+
+            OnDamaged?.Invoke();
         }
 
         public void Heal(int amount)
@@ -42,7 +45,9 @@ namespace TestGame.Core.Health
 
         private void Die()
         {
-            OnDamaged?.Invoke();
+            Debug.Log("Персонаж умер");
+            _currentHealth = 0;
+            OnDead?.Invoke();
         }
 
     }

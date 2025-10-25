@@ -72,5 +72,10 @@ namespace TestGame.Core.Movement
         {
             _rb.AddForce(force, mode);
         }
+
+        public Vector2 GetVelocity()
+        {
+            return _rb.velocity;
+        }
     }
 }

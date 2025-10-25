@@ -15,8 +15,11 @@ namespace TestGame.Core.Weapon
         [SerializeField] private float maxExplosionForce = 10f;
         [SerializeField] private int explosionDamage = 1;
 
+        [SerializeField] private Animator _animator;
         private float explosionTimer = 0f;
         private bool _isActivated = false;
+
+        private bool _wasExplode = false;
 
         private Rigidbody2D _rb;
 
@@ -33,23 +36,27 @@ namespace TestGame.Core.Weapon
 
         private void Update()
         {
+            if (_wasExplode) return;
+            _animator.SetBool("IsActive", _isActivated);
+
             if (_isActivated)
             {
                 explosionTimer += Time.deltaTime;
+                
             }
 
             if (explosionTimer >= explosionInterval)
             {
                 Explode();
                 _isActivated = false;
-                Destroy(gameObject);
+                _wasExplode = true;
             }
         }
 
         private void Explode()
         {
-            Debug.Log("Взрыв");
-            //Создает сферу вокруг себя, наносит урон, отталкивает кого надо
+            _animator.SetTrigger("Explosion");
+            Destroy(gameObject, 0.3f);
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
 
             foreach (Collider2D hit in hits)
@@ -74,7 +81,6 @@ namespace TestGame.Core.Weapon
 
                     forcable.AddForce(direction * finalForce, ForceMode2D.Impulse);
                 }
-
             }
         }
 

@@ -15,16 +15,21 @@ namespace TestGame.Gameplay.Character
 
         public CombatSystem CombatSystem { get; }
 
+        private bool _isAlive = true;
+
         public Character(HealthSystem health, PhysicalMover mover, CombatSystem combat)
         {
             Health = health;
             PhysicalMover = mover;
             CombatSystem = combat;
+
+            Health.OnDead += KillCharacter;
         }
 
         public void FixedUpdate(float fixedDeltaTime)
         {
-            PhysicalMover.FixedUpdate(fixedDeltaTime);
+            if (_isAlive)
+                PhysicalMover.FixedUpdate(fixedDeltaTime);
         }
 
         public void TakeDamage(DamageInfo info)
@@ -35,6 +40,12 @@ namespace TestGame.Gameplay.Character
         public void AddForce(Vector2 force, ForceMode2D mode)
         {
             PhysicalMover.AddForce(force, mode);
+        }
+
+        private void KillCharacter()
+        {
+            _isAlive = false;
+            //ט עה
         }
     }
 }

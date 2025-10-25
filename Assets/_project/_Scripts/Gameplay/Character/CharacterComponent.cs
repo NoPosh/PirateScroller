@@ -49,7 +49,7 @@ namespace TestGame.Gameplay.Character
             _inputHandler.OnPutBomb += _character.CombatSystem.PutBomb;
 
             _character.Health.OnDamaged += () => _animator.SetTrigger("Hit");  
-            _character.Health.OnDead += () => _animator.SetTrigger("DeadHit");
+            _character.Health.OnDead += () => _animator.SetBool("IsDead", true);
 
             _character.PhysicalMover.OnJump += () => _animator.SetTrigger("Jump");
         }
