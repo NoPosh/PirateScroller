@@ -16,63 +16,116 @@ namespace TestGame.Gameplay.Enemy
     public class EnemyComponent : MonoBehaviour, IDamageable, IForcable
     {
         [SerializeField] private CharacterSettings _enemySettings;
-        [SerializeField] private GroundCheck _groundCheck;
-        [SerializeField] private EnemyDetector _enemyDetector;
-        private JumpHandler _jumpHandler;
+        [SerializeField] private EnemySensors _enemySensors;
+        [SerializeField] private Animator _animator;    //Надо подключить аниматор, как лучше бы это сделать?
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
-        //Нужна ли сборная STM через SO? Было бы удобно, но будто излишне для таких врагов
-        private Core.Enemy.Enemy _enemy;
+        private EnemyAI _enemyAI;
+        private EnemyAIContext _context;
+        private IEnemyActions _actions;
+
+        private PhysicalMover _mover;
+        private JumpHandler _jump;
+        private IBombInteraction _bombIntreactions;
+        private EnemyAttackHandler _attack;
+
+        private HealthSystem _healthSystem;
+        
         private Rigidbody2D _rb;
 
-        private bool IsGrounded => _groundCheck.IsGrounded;
-        private bool CanJump => _jumpHandler.CanJump;
+        private bool _isRight;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _jumpHandler = GetComponent<JumpHandler>();
 
-            var mover = new PhysicalMover(_rb, _enemySettings._physicalMoveSettings);
-            var health = new HealthSystem(_enemySettings.maxHealth);
+            _mover = new PhysicalMover(_rb, _enemySettings._physicalMoveSettings);
+            _attack = new EnemyAttackHandler();
+            _bombIntreactions = new KickBombInteraction(transform);
+            _actions = new EnemyActions(_mover, _attack, _bombIntreactions);
 
-            var stm = new EnemyStateMachine();
+            _context = new EnemyAIContext(transform);
+            //Еще надо инициализировать все остальное
 
-            _enemy = new Core.Enemy.Enemy(health, mover, stm);
+            _healthSystem = new HealthSystem(_enemySettings.maxHealth);    //Это надо сделать отдельной системой            
 
-            //_enemyDetector.OnCharacterEnter += v => _enemy.StateMachine.StateInfo.SetCharacterPosition(v);
-            //_enemyDetector.OnCharacterExit += _enemy.StateMachine.StateInfo.ResetCharacterPos;
-            //
-            //_enemyDetector.OnBombEnter += bomb => _enemy.StateMachine.StateInfo.SetBombPosition(bomb.transform.position);
-            //_enemyDetector.OnBombExit += _enemy.StateMachine.StateInfo.ResetBombPosition;
+            _enemyAI = new EnemyAI(_actions, _context, _healthSystem);
+
+            _enemySensors.OnCharacterEnter += UpdateCharacterContext;
+            _enemySensors.OnCharacterExit += UpdateCharacterContext;
+
+            _healthSystem.OnDamaged += () => _animator.SetTrigger("Hit");
+            _mover.OnJump += () => _animator.SetTrigger("Jump");
+
+            _bombIntreactions.OnBombInteraction += () => _animator.SetTrigger("Attack");
+            _attack.OnAttack += () => _animator.SetTrigger("Attack");
+
         }
 
         private void FixedUpdate()
+        {       
+            _actions.FixedUpdate(Time.fixedDeltaTime);
+            _actions.SetGrounded(_enemySensors.IsGrounded);
+            _context.IsGrounded = _enemySensors.IsGrounded;
+        }
+
+        private void Update()
         {
-            _enemy.PhysicalMover.SetGrounded(IsGrounded);
-            _enemy.StateMachine.StateInfo.NeedJump = CanJump;
+            _actions.Update(Time.deltaTime);
 
-            if (_enemyDetector.HasBombs)
-                _enemy.StateMachine.StateInfo.SetBombPosition(_enemyDetector.GetNearestBomb().transform.position);
+            if (_enemySensors.HasCharacter)
+            {
+                _context.CharacterPosition = _enemySensors.CharacterPosition;
+            }
+            if (_enemySensors.HasBomb)
+            {
+                _context.HasBomb = _enemySensors.HasBomb;
+                _context.BombPosition = _enemySensors.BombPosition;
+                _context.Bomb = _enemySensors.CurrentBomb;  //TODO: Вообще можно не бомбу, а интерфейс с доступными действиями бомбы
+            }
             else
-                _enemy.StateMachine.StateInfo.ResetBombPosition();
+            {
+                _context.HasBomb = _enemySensors.HasBomb;
+            }
 
-            if (_enemyDetector.HasCharacter)
-                _enemy.StateMachine.StateInfo.SetCharacterPosition(_enemyDetector.CharacterPosition);
-            else
-                _enemy.StateMachine.StateInfo.ResetCharacterPos();
+            _enemyAI.Update(Time.deltaTime);
+            _context.CurrentVelocity = _rb.velocity;
 
-            _enemy.FixedUpdate(Time.fixedDeltaTime);
+            if (_context.CurrentVelocity.x < 0 && _isRight)
+            {
+                _spriteRenderer.flipX = true;
+                _isRight = false;
+            } 
+            else if (_context.CurrentVelocity.x > 0 && !_isRight)
+            {
+                _spriteRenderer.flipX = false;
+                _isRight = true;
+            }
 
+            _animator.SetFloat("SpeedX", Mathf.Abs(_context.CurrentVelocity.x));
+            _animator.SetFloat("SpeedY", _context.CurrentVelocity.y);
+           
+            _animator.SetBool("IsGrounded", _context.IsGrounded);
+
+            _animator.SetBool("IsDead", !_enemyAI.IsAlive);
         }
 
         public void TakeDamage(DamageInfo info)
         {
-            _enemy.TakeDamage(info);
+            _enemyAI.TakeDamage(info);
         }
 
         public void AddForce(Vector2 force, ForceMode2D mode)
         {
-            _enemy.AddForce(force, mode);
+            _actions.AddForce(force, mode);
+        }
+
+        private void UpdateCharacterContext()
+        {
+            _context.HasCharacter =_enemySensors.HasCharacter;
+            _context.CharacterDamageable = _enemySensors.CurrentCharacterDamageable;
+            _context.CharacterForcable = _enemySensors.CharacterForcable;
+            _context.CharacterPosition = _enemySensors.CharacterPosition;
         }
 
     }

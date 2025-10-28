@@ -16261,7 +16261,8 @@ GameObject:
   m_Component:
   - component: {fileID: 105708740}
   - component: {fileID: 105708742}
-  - component: {fileID: 105708741}
+  - component: {fileID: 105708744}
+  - component: {fileID: 105708743}
   m_Layer: 0
   m_Name: EnemyDetector
   m_TagString: Untagged
@@ -16284,18 +16285,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1984327928}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &105708741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105708739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6b8ab54af961dd44a3ac442a1639583, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &105708742
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -16308,7 +16297,7 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1152
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -16331,6 +16320,31 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3
+--- !u!114 &105708743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105708739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21605c044314c1d4e811bae4ffa371f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstBomb: {fileID: 0}
+--- !u!114 &105708744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105708739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f29ec796cd5ebe4893af617d6e2921e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &111569213
 GameObject:
   m_ObjectHideFlags: 0
@@ -16495,7 +16509,7 @@ Animator:
   m_GameObject: {fileID: 265872804}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4c3169d0e697ad44a8637704296c594a, type: 2}
+  m_Controller: {fileID: 9100000, guid: b3ce05be47672b0428169207d451b8a7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -16546,8 +16560,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
-  m_Sprite: {fileID: 21300000, guid: fb6d43bfe94a61e459ab51b50f9215df, type: 3}
+  m_SortingOrder: 95
+  m_Sprite: {fileID: 21300000, guid: 660afa8b38138c64c9b4feabd68e0eb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -22574,7 +22588,7 @@ GameObject:
   - component: {fileID: 1449758893}
   - component: {fileID: 1449758891}
   - component: {fileID: 1449758896}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Character
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -22661,10 +22675,10 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1015
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1015
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -23287,7 +23301,8 @@ GameObject:
   - component: {fileID: 1984327926}
   - component: {fileID: 1984327925}
   - component: {fileID: 1984327924}
-  m_Layer: 0
+  - component: {fileID: 1984327929}
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23319,8 +23334,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
-  _groundCheck: {fileID: 407728616}
-  _enemyDetector: {fileID: 105708741}
+  _enemySensors: {fileID: 1984327929}
+  _animator: {fileID: 265872806}
+  _spriteRenderer: {fileID: 265872807}
 --- !u!61 &1984327926
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23340,10 +23356,10 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1015
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1015
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -23411,6 +23427,22 @@ Transform:
   - {fileID: 105708740}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1984327929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984327923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63eb2e8e7a9e0014f8294db1c59c09d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundCheck: {fileID: 407728616}
+  _jumpHandler: {fileID: 1984327924}
+  _enemyCharacterDetector: {fileID: 105708744}
+  _enemyBombDetector: {fileID: 105708743}
 --- !u!1 &1986456035
 GameObject:
   m_ObjectHideFlags: 0

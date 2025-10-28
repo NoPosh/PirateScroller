@@ -26,7 +26,6 @@ namespace TestGame.Core.Movement
             _settings = settings;
         }
 
-        //TODO: разделить maxSpeed по X и Y
         public void FixedUpdate(float fixedDeltaTime)
         {
             
@@ -57,12 +56,11 @@ namespace TestGame.Core.Movement
 
         public void SetDirection(Vector2 direction)
         {
-            _currentDirection = direction;
+            _currentDirection = new Vector2(direction.x, 0);
         }
 
         public void JumpRequest()
         {
-
             _needJump = true; 
         }
 

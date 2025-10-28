@@ -9,17 +9,16 @@ namespace TestGame.Core.Enemy
     {
         //Начинает идти сначала вправо, если упирается во что-то, то проверяет на триггер прыжка: либо прыгает, либо разворачивается
         private EnemyStateMachine _stateMachine;
+        private EnemyAIContext _context;
         private bool _isRight = true;
 
         private float _stuckTimer = 0f;
         private const float STUCK_TIME_THRESHOLD = 0.5f;
-
-        public event Action<Vector2> OnMoveDirection;
-        public event Action OnJumpRequest;
         
-        public PatrolState(EnemyStateMachine stateMachine)
+        public PatrolState(EnemyStateMachine stateMachine, EnemyAIContext context)
         {
             _stateMachine = stateMachine;
+            _context = context;
         }
 
         public override void Enter()
@@ -30,7 +29,7 @@ namespace TestGame.Core.Enemy
 
         public override void Update(float deltaTime)
         {
-            if (Mathf.Abs(_stateMachine.StateInfo.CurrentVelocity.x) < 0.1f)
+            if (Mathf.Abs(_context.CurrentVelocity.x) < 0.1f)
             {
                 _stuckTimer += deltaTime;
 
@@ -50,9 +49,9 @@ namespace TestGame.Core.Enemy
 
         private void HandleObstacle()
         {
-            if (_stateMachine.StateInfo.NeedJump)
+            if (_context.IsInJumpPlace)
             {
-                _stateMachine.JumpRequest();
+                _stateMachine.Actions.Jump();
             }
             else
             {
@@ -64,12 +63,12 @@ namespace TestGame.Core.Enemy
         private void UpdateMovementDirection()
         {           
             Vector2 direction = _isRight ? Vector2.right : Vector2.left;
-            _stateMachine.SetMoveDirection(direction);
+            _stateMachine.Actions.SetDirection(direction);
         }
 
         public override void Exit()
         {
-            OnMoveDirection?.Invoke(Vector2.zero);
+            _stateMachine.Actions.SetDirection(Vector2.zero);
         }
     }
 }
