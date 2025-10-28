@@ -37,6 +37,16 @@ namespace TestGame.Gameplay.Character
             Health.TakeDamage(info);
         }
 
+        public void Heal(int amount)
+        {
+            Health.Heal(amount);
+        }
+
+        public void AddBomb(int amount)
+        {
+            CombatSystem.AddBomb(amount);
+        }
+
         public void AddForce(Vector2 force, ForceMode2D mode)
         {
             PhysicalMover.AddForce(force, mode);

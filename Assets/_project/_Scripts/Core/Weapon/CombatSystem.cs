@@ -27,6 +27,7 @@ namespace TestGame.Core.Weapon
         public void AddBomb(int amount = 1)
         {
             _bombsAmount += amount;
+            Debug.Log("Добавили бомбу");
         }
 
         public void ThrowBomb(Vector3 direction)

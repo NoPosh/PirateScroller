@@ -20,7 +20,9 @@ namespace TestGame.Gameplay.Character
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private Animator _animator;
         [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private CharacterInteractor _interactor;
 
+        private InteractionContext _interactionContext;
         private Character _character;
         private Rigidbody2D _rb;
         private InputHandler _inputHandler;
@@ -42,6 +44,10 @@ namespace TestGame.Gameplay.Character
             _combatSystem.AddBomb(10);
 
             _character = new Character(health, mover, _combatSystem);
+
+            CharacterActions actions = new CharacterActions(_character.AddBomb, _character.Heal);
+            _interactionContext = new InteractionContext(gameObject, actions);
+            _interactor.Init(_interactionContext);
 
             _inputHandler.OnMove += v => _character.PhysicalMover.SetDirection(v);
             _inputHandler.OnJump += _character.PhysicalMover.JumpRequest;
