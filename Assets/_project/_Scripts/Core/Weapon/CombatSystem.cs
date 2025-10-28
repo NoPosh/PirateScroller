@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TestGame.Core.EventBus;
 using TestGame.Core.Interfaces;
 using UnityEngine;
 
@@ -17,6 +18,8 @@ namespace TestGame.Core.Weapon
         {
             _spawnPoint = spawnPoint;
             _throwForce = throwForce;
+
+            EventBus.EventBus.Raise(new BombAmountChange(_bombsAmount));
         }
 
         public void SetWeapon(BaseBomb weapon)
@@ -27,6 +30,7 @@ namespace TestGame.Core.Weapon
         public void AddBomb(int amount = 1)
         {
             _bombsAmount += amount;
+            EventBus.EventBus.Raise(new BombAmountChange(_bombsAmount));
             Debug.Log("Добавили бомбу");
         }
 
@@ -52,6 +56,8 @@ namespace TestGame.Core.Weapon
             if (_bombsAmount > 0)
             {
                 _bombsAmount--;
+                EventBus.EventBus.Raise(new BombAmountChange(_bombsAmount));
+
                 GameObject go = BombFabric.Instance.SpawnBomb(_spawnPoint, _baseBomb.GetPrefab());
                 BaseBomb bomb = go.GetComponent<BaseBomb>();
                 bomb.Init();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TestGame.Core.DTO;
+using TestGame.Core.EventBus;
 using TestGame.Core.Health;
 using TestGame.Core.Input;
 using TestGame.Core.Interfaces;
@@ -57,6 +58,8 @@ namespace TestGame.Gameplay.Character
             _character.Health.OnDamaged += () => _animator.SetTrigger("Hit");  
             _character.Health.OnDead += () => _animator.SetBool("IsDead", true);
 
+            _character.Health.OnHealthChanged += ChangeHealth;
+
             _character.PhysicalMover.OnJump += () => _animator.SetTrigger("Jump");
         }
 
@@ -90,5 +93,9 @@ namespace TestGame.Gameplay.Character
             _character.AddForce(force, mode);
         }
 
+        private void ChangeHealth()
+        {
+            EventBus.Raise(new OnCharacterHealthChange(_character.Health.CurrentHealth));
+        }
     }
 }
