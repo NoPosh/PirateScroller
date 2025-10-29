@@ -27,4 +27,23 @@ namespace TestGame.Core.EventBus
         }
 
     }
+
+    public struct OnToggleGamePause
+    {
+
+    }
+
+    public struct OnGameStateChange
+    {
+        public readonly bool IsPaused;
+        public OnGameStateChange(bool tog)
+        {
+            IsPaused = tog;
+        }
+    }
+
+    public struct OnGameOver
+    {
+
+    }
 }

@@ -127,6 +127,15 @@ public partial class @InputS: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ESC"",
+                    ""type"": ""Button"",
+                    ""id"": ""f15c09a6-fbda-4b77-990d-b921c531b12e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -195,6 +204,17 @@ public partial class @InputS: IInputActionCollection2, IDisposable
                     ""action"": ""RMB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05f4b072-0b4f-4e84-8512-cf06ff033950"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ESC"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -207,6 +227,7 @@ public partial class @InputS: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_LMB = m_Player.FindAction("LMB", throwIfNotFound: true);
         m_Player_RMB = m_Player.FindAction("RMB", throwIfNotFound: true);
+        m_Player_ESC = m_Player.FindAction("ESC", throwIfNotFound: true);
     }
 
     ~@InputS()
@@ -291,6 +312,7 @@ public partial class @InputS: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_LMB;
     private readonly InputAction m_Player_RMB;
+    private readonly InputAction m_Player_ESC;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -318,6 +340,10 @@ public partial class @InputS: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/RMB".
         /// </summary>
         public InputAction @RMB => m_Wrapper.m_Player_RMB;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ESC".
+        /// </summary>
+        public InputAction @ESC => m_Wrapper.m_Player_ESC;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -356,6 +382,9 @@ public partial class @InputS: IInputActionCollection2, IDisposable
             @RMB.started += instance.OnRMB;
             @RMB.performed += instance.OnRMB;
             @RMB.canceled += instance.OnRMB;
+            @ESC.started += instance.OnESC;
+            @ESC.performed += instance.OnESC;
+            @ESC.canceled += instance.OnESC;
         }
 
         /// <summary>
@@ -379,6 +408,9 @@ public partial class @InputS: IInputActionCollection2, IDisposable
             @RMB.started -= instance.OnRMB;
             @RMB.performed -= instance.OnRMB;
             @RMB.canceled -= instance.OnRMB;
+            @ESC.started -= instance.OnESC;
+            @ESC.performed -= instance.OnESC;
+            @ESC.canceled -= instance.OnESC;
         }
 
         /// <summary>
@@ -447,5 +479,12 @@ public partial class @InputS: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRMB(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ESC" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnESC(InputAction.CallbackContext context);
     }
 }

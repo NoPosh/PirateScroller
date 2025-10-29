@@ -17,6 +17,10 @@ namespace TestGame.UI
         {
             EventBus.Subscribe<OnCharacterHealthChange>(UpdateUI);
         }
+        private void OnDisable()
+        {
+            EventBus.Unsubscribe<OnCharacterHealthChange>(UpdateUI);
+        }
         private void UpdateUI(OnCharacterHealthChange e)
         {
             if (e.CurrentHealth < 3) _thirdHearth.gameObject.SetActive(false);

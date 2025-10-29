@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TestGame.Core.EventBus;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -22,6 +23,7 @@ namespace TestGame.Core.Input
 
         private bool _needThrowBomb;
         private bool _needPutBomb;
+        private bool _pauseGame;
 
         public InputHandler()
         {
@@ -33,9 +35,19 @@ namespace TestGame.Core.Input
         {
             _moveInput = _controls.Player.Move.ReadValue<Vector2>();
             _needJump = _controls.Player.Jump.IsPressed();
+            _pauseGame = _controls.Player.ESC.triggered;
 
             _needThrowBomb = _controls.Player.LMB.triggered;
             _needPutBomb = _controls.Player.RMB.triggered;
+
+            if (_pauseGame)
+            {
+                EventBus.EventBus.Raise(new OnToggleGamePause());
+                _pauseGame = false;
+                return;
+            }
+
+            if (Level.LevelManager.Instance.IsPaused) return;
 
             if (_moveInput != Vector2.zero)
             {
@@ -64,11 +76,13 @@ namespace TestGame.Core.Input
             {
                 OnPutBomb?.Invoke();
             }
+
         }
 
         public void Disable()
         {
-            _controls.Player.Disable();
+            _controls.Disable();
         }
+
     }
 }

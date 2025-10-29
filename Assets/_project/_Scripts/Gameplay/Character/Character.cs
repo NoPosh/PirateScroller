@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TestGame.Core.DTO;
+using TestGame.Core.EventBus;
 using TestGame.Core.Health;
 using TestGame.Core.Movement;
 using TestGame.Core.Weapon;
@@ -55,6 +56,7 @@ namespace TestGame.Gameplay.Character
         private void KillCharacter()
         {
             _isAlive = false;
+            EventBus.Raise(new OnGameOver());
             //ט עה
         }
     }

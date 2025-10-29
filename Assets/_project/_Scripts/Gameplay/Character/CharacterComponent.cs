@@ -97,5 +97,10 @@ namespace TestGame.Gameplay.Character
         {
             EventBus.Raise(new OnCharacterHealthChange(_character.Health.CurrentHealth));
         }
+
+        private void OnDestroy()
+        {
+            _inputHandler.Disable();
+        }
     }
 }
