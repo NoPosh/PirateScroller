@@ -27473,10 +27473,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 195456579}
   _animator: {fileID: 440474332}
   _spriteRenderer: {fileID: 440474330}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &195456582
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28070,10 +28071,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 239070004}
   _animator: {fileID: 1765257649}
   _spriteRenderer: {fileID: 1765257647}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &239070007
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -30842,10 +30844,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 413182409}
   _animator: {fileID: 1447608072}
   _spriteRenderer: {fileID: 1447608070}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &413182412
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32151,10 +32154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 545136863}
   _animator: {fileID: 815400521}
   _spriteRenderer: {fileID: 815400519}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &545136866
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -43569,10 +43573,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 1155286806}
   _animator: {fileID: 687728089}
   _spriteRenderer: {fileID: 687728087}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &1155286809
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45108,10 +45113,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 1262199534}
   _animator: {fileID: 1970780252}
   _spriteRenderer: {fileID: 1970780250}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &1262199537
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -57705,10 +57711,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 1522827696}
   _animator: {fileID: 980115473}
   _spriteRenderer: {fileID: 980115471}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &1522827699
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -58591,10 +58598,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 1630775388}
   _animator: {fileID: 650740832}
   _spriteRenderer: {fileID: 650740830}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &1630775391
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -58932,10 +58940,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 1674399953}
   _animator: {fileID: 40166673}
   _spriteRenderer: {fileID: 40166671}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &1674399956
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -62862,10 +62871,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37327a0e147813545878b377f8626f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySettings: {fileID: 11400000, guid: e5c31c309b7bc5c4d86a633a92265c33, type: 2}
+  _enemySettings: {fileID: 11400000, guid: d8d9ea04d57b5a7478296e4a27cd5db3, type: 2}
   _enemySensors: {fileID: 1984327929}
   _animator: {fileID: 265872806}
   _spriteRenderer: {fileID: 265872807}
+  _attackSettings: {fileID: 11400000, guid: 48e68425eda4b594aab1b4e76c6fbf9d, type: 2}
 --- !u!61 &1984327926
 BoxCollider2D:
   m_ObjectHideFlags: 0

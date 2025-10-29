@@ -15,10 +15,12 @@ namespace TestGame.Gameplay.Enemy
     [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyComponent : MonoBehaviour, IDamageable, IForcable
     {
-        [SerializeField] private CharacterSettings _enemySettings;
+        [SerializeField] private EnemySettings _enemySettings;
         [SerializeField] private EnemySensors _enemySensors;
         [SerializeField] private Animator _animator;    //Надо подключить аниматор, как лучше бы это сделать?
         [SerializeField] private SpriteRenderer _spriteRenderer;
+
+        [SerializeField] private EnemyAttackSettings _attackSettings;
 
         private EnemyAI _enemyAI;
         private EnemyAIContext _context;
@@ -40,7 +42,7 @@ namespace TestGame.Gameplay.Enemy
             _rb = GetComponent<Rigidbody2D>();
 
             _mover = new PhysicalMover(_rb, _enemySettings._physicalMoveSettings);
-            _attack = new EnemyAttackHandler();
+            _attack = new EnemyAttackHandler(_attackSettings);
             _bombIntreactions = new KickBombInteraction(transform);
             _actions = new EnemyActions(_mover, _attack, _bombIntreactions);
 

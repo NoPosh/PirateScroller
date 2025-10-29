@@ -15,9 +15,11 @@ namespace TestGame.Data.Settings
         public int maxHealth;
 
         [Header("Настройки оружия")]
-        public BaseBomb startBomb;
+        public BaseBomb startBomb;  //Есть мысль дать возможность менять бомбы
 
         [Header("Прочее")]
         public float _throwForce;
     }
+
+    
 }

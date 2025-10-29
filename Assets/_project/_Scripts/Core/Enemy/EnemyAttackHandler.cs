@@ -2,18 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TestGame.Core.Interfaces;
+using TestGame.Data.Settings;
 using UnityEngine;
 
 namespace TestGame.Core.Enemy
 {
     public class EnemyAttackHandler
     {
-        private int _attackDamage = 1;
-        private float _attackCooldown = 2f;
-
+        EnemyAttackSettings _settings;
         private float _attackTimner = 0f;
 
         public event Action OnAttack;
+
+        public EnemyAttackHandler(EnemyAttackSettings settings)
+        {
+            _settings = settings;
+        }
 
         public void Update(float fixedDeltaTime)
         {
@@ -24,13 +28,13 @@ namespace TestGame.Core.Enemy
         {
             if (_attackTimner <= 0f)
             {
-                damageable.TakeDamage(new DTO.DamageInfo(_attackDamage));
-                _attackTimner = _attackCooldown;
+                damageable.TakeDamage(new DTO.DamageInfo(_settings._attackDamage));
+                _attackTimner = _settings._attackCooldown;
                 OnAttack?.Invoke();
 
                 return true;
             }
             return false;
         }
-    }
+    }  
 }

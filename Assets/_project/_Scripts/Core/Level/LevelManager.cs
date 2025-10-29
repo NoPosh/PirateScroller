@@ -53,7 +53,12 @@ namespace TestGame.Core.Level
     
         public void RestartLevel()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            LoadSceneByName(SceneManager.GetActiveScene().name);
+        }
+
+        public void LoadSceneByName(string name)
+        {
+            SceneManager.LoadScene(name);
         }
     }
 }
