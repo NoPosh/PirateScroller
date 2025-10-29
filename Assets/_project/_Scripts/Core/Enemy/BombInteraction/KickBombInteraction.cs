@@ -12,7 +12,7 @@ namespace TestGame.Core.Enemy
         private float _kickForce;
         private readonly Transform transform;
 
-        private float interactionCooldown = 2f;
+        private float interactionCooldown =2f;
         private float interactionTimer = 0f;
 
         public event Action OnBombInteraction;
@@ -36,6 +36,7 @@ namespace TestGame.Core.Enemy
                 IForcable forcable = bomb.gameObject.GetComponent<IForcable>();
 
                 Vector2 dir = (Vector2)bomb.transform.position - (Vector2)transform.position;
+                dir.y = 1f;
                 forcable.AddForce(dir * _kickForce, ForceMode2D.Impulse);
                 interactionTimer = interactionCooldown;
 
